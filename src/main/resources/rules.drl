@@ -1,0 +1,17 @@
+import com.natwest.reportgenerator.model.InputRecord;
+import com.natwest.reportgenerator.model.OutputRecord;
+import com.natwest.reportgenerator.model.ReferenceRecord;
+
+rule "Generate Output Record"
+when
+    $input : InputRecord()
+    $ref : ReferenceRecord(refkey1 == $input.refkey1, refkey2 == $input.refkey2)
+then
+    OutputRecord output = new OutputRecord();
+    output.setOutfield1($input.getField1() + $input.getField2());
+    output.setOutfield2($ref.getRefdata1());
+    output.setOutfield3($ref.getRefdata2() + $ref.getRefdata3());
+    output.setOutfield4($input.getField3() + Math.max(Double.parseDouble($input.getField5()), Double.parseDouble($ref.getRefdata4())));
+    output.setOutfield5(""+Math.max(Double.parseDouble($input.getField5()), Double.parseDouble($ref.getRefdata4())));
+    insert(output);
+end

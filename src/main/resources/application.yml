@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: reportgenerator
+
+file:
+  path:
+    input: src/main/resources/input.csv
+    reference: src/main/resources/reference.csv
+    output: src/main/resources/output.csv
+
+report:
+  scheduler:
+    cron: "0 */5 * * * *"
